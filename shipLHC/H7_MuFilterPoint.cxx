@@ -1,4 +1,4 @@
-#include "H7_MuFilterPoint.h"
+#include "MuFilterPoint.h"
 
 #include <iostream>
 using std::cout;
@@ -6,7 +6,7 @@ using std::endl;
 
 
 // -----   Default constructor   -------------------------------------------
-H7_MuFilterPoint::H7_MuFilterPoint()
+MuFilterPoint::MuFilterPoint()
   : FairMCPoint()
 {
 }
@@ -14,7 +14,7 @@ H7_MuFilterPoint::H7_MuFilterPoint()
 
 // -----   Standard constructor   ------------------------------------------
 
-H7_MuFilterPoint::H7_MuFilterPoint(Int_t trackID, Int_t detID,TVector3 pos, TVector3 mom,
+MuFilterPoint::MuFilterPoint(Int_t trackID, Int_t detID,TVector3 pos, TVector3 mom,
                          Double_t tof, Double_t length,
 			 Double_t eLoss, Int_t pdgcode)
   : FairMCPoint(trackID, detID, pos, mom, tof, length, eLoss),fPdgCode(pdgcode)
@@ -24,13 +24,13 @@ H7_MuFilterPoint::H7_MuFilterPoint(Int_t trackID, Int_t detID,TVector3 pos, TVec
 
 
 // -----   Destructor   ----------------------------------------------------
-H7_MuFilterPoint::~H7_MuFilterPoint() { }
+MuFilterPoint::~MuFilterPoint() { }
 // -------------------------------------------------------------------------
 
 // -----   Public method Print   -------------------------------------------
-void H7_MuFilterPoint::Print(const Option_t* opt) const
+void MuFilterPoint::Print(const Option_t* opt) const
 {
-  cout << "-I- H7_MuFilterPoint: box point for track " << fTrackID
+  cout << "-I- MuFilterPoint: box point for track " << fTrackID
        << " in detector " << fDetectorID << endl;
   cout << "    Position (" << fX << ", " << fY << ", " << fZ
        << ") cm" << endl;
@@ -41,5 +41,5 @@ void H7_MuFilterPoint::Print(const Option_t* opt) const
 }
 // -------------------------------------------------------------------------
 
-ClassImp(H7_MuFilterPoint)
+ClassImp(MuFilterPoint)
 

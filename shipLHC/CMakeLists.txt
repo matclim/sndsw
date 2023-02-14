@@ -37,6 +37,8 @@ ScifiPoint.cxx
 MuFilter.cxx
 MuFilterPoint.cxx
 MuFilterHit.cxx
+H7_MuFilter.cxx
+H7_MuFilterPoint.cxx
 sndScifiHit.cxx
 sndCluster.cxx
 SNDLHCEventHeader.cxx

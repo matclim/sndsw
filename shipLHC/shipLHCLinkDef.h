@@ -13,6 +13,8 @@
 #pragma link C++ class ScifiPoint+;
 #pragma link C++ class MuFilter+;
 #pragma link C++ class MuFilterPoint+;
+#pragma link C++ class H7_MuFilter+;
+#pragma link C++ class H7_MuFilterPoint+;
 #pragma link C++ class MuFilterHit+;
 #pragma link C++ class sndScifiHit+;
 #pragma link C++ class sndCluster;
