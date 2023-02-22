@@ -20,7 +20,8 @@ MCTracksWithHitsOrEnergyCut = False # or of above, factor 2 file size increase c
 parser = ArgumentParser()
 group = parser.add_mutually_exclusive_group()
 
-parser.add_argument("--H6",   dest="testbeam",   help="use geometry of H8/H6 testbeam setup", required=False, default = 0, type = int)
+parser.add_argument("--H7",   dest="testbeamH7",   help="use geometry of new [denominated H7 for now] testbeam setup", required=False, default = 0, type = int)
+parser.add_argument("--H6",   dest="testbeamH6",   help="use geometry of H8/H6 testbeam setup", required=False, default = 0, type = int)
 parser.add_argument("--Genie",   dest="genie",   help="Genie for reading and processing neutrino interactions (1 standard, 2 FLUKA, 3 Pythia, 4 GENIE geometry driver)", required=False, default = 0, type = int)
 parser.add_argument("--Ntuple",  dest="ntuple",  help="Use ntuple as input", required=False, action="store_true")
 parser.add_argument("--MuonBack",dest="muonback",  help="Generate events from muon background file, --Cosmics=0 for cosmic generator data", required=False, action="store_true")
@@ -102,8 +103,11 @@ print("SND@LHC setup for",simEngine,"to produce",options.nEvents,"events")
 ROOT.gRandom.SetSeed(options.theSeed)  # this should be propagated via ROOT to Pythia8 and Geant4VMC
 shipRoot_conf.configure(0)     # load basic libraries, prepare atexit for python
 
-if options.testbeam:  snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_H6geom_config.py")
-else:                         snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_geom_config.py")
+if options.testbeamH6:  snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_H6geom_config.py")
+elif options.testbeamH7:
+  snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_H7geom_config.py")
+else:                         
+  snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_geom_config.py")
 
 if simEngine == "PG": tag = simEngine + "_"+str(options.pID)+"-"+mcEngine
 else: tag = simEngine+"-"+mcEngine
@@ -194,7 +198,10 @@ if simEngine=="Genie":
    # Tolerance for neutrino vertex generation range. Mostly to account for tilt in geometry alignment. Take difference in z coordinate of vertical fibres of around 0.5 cm over the fibre length, 39 cm. Assume maximum difference in z is 1 m * 0.5/39.
    tolerance_vtx_z = 1*u.m * 0.5/39
    # From first veto bar
-   neutrino_vtx_start_z = snd_geo.MuFilter.Veto1Dy - snd_geo.MuFilter.VetoBarZ/2. - tolerance_vtx_z
+   if(options.testbeamH7):
+     neutrino_vtx_start_z = snd_geo.H7_MuFilter.Veto1Dy - snd_geo.H7_MuFilter.VetoBarZ/2. - tolerance_vtx_z
+   else:
+     neutrino_vtx_start_z = snd_geo.MuFilter.Veto1Dy - snd_geo.MuFilter.VetoBarZ/2. - tolerance_vtx_z
    # To last Scifi plane
    neutrino_vtx_end_z = snd_geo.Scifi.Ypos4 + snd_geo.Scifi.zdim/2. + tolerance_vtx_z
 

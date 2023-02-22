@@ -249,7 +249,7 @@ void H7_MuFilter::ConstructGeometry()
 	TVector3 USBoxDim = TVector3( USBox1.X()-USBox2.X(), USBox2.Y()-USBox1.Y(), USBox2.Z()-USBox1.Z() ) ;
 
 	//Iron blocks volume definition
-	TGeoVolume *volFeBlock = gGeoManager->MakeBox("volFeBlock",Fe,fFeBlockX/2, fFeBlockY/2, fFeBlockZ/2);
+	TGeoVolume *volFeBlock = gGeoManager->MakeBox("volFeBlock",Fe,fFeBlockX/2, fFeBlockY/2, fFeBlockZ/2); 
 	volFeBlock->SetLineColor(kGreen-4);
 	TGeoVolume *volFeBlockEnd = gGeoManager->MakeBox("volFeBlockEnd",Fe,fFeBlockEndX/2, fFeBlockEndY/2, fFeBlockEndZ/2);
 	volFeBlockEnd->SetLineColor(kGreen-4);
@@ -308,17 +308,22 @@ void H7_MuFilter::ConstructGeometry()
 	//Target: between end of Iron target and scintillator 0.76cm
 	//gap between first scint and iron plate is 0.74cm
 	  if (edge_Iron[9][2] <0.1 && l==0) {
-		TGeoVolume *volFeTarget[3] = {gGeoManager->MakeBox("volFeTarget",Fe,80./2, 60./2, 29.5/2/3),gGeoManager->MakeBox("volFeTarget",Fe,80./2, 60./2, 29.5/2/3),gGeoManager->MakeBox("volFeTarget",Fe,80./2, 60./2, 29.5/2/3)};
+		TGeoVolume *volFeTarget[3] = {gGeoManager->MakeBox("volScintTarget0",Scint,80./2, 60./2, 29.5/2/3),gGeoManager->MakeBox("volScintTarget1",Fe,80./2, 60./2, 29.5/2/3),gGeoManager->MakeBox("volScintTarget2",Scint,80./2, 60./2, 29.5/2/3)};
 		volFeTarget[0]->SetLineColor(kGreen-4);
 		volFeTarget[1]->SetLineColor(kGreen-4);
 		volFeTarget[2]->SetLineColor(kGreen-4);
+
+		AddSensitiveVolume(volFeTarget[0]);
+		AddSensitiveVolume(volFeTarget[1]);
+		AddSensitiveVolume(volFeTarget[2]);
+
 		displacement = edge_Iron[l+1] - TVector3(80/2,-60/2,29.5/2+fFeBlockZ+3*fTargetScintillatorZ);
 		volH7_MuFilter->AddNode(volFeTarget[0],1,
                                     new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
 		volH7_MuFilter->AddNode(volFeTarget[1],1,
-                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
+                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+29.5/3+2.5));
 		volH7_MuFilter->AddNode(volFeTarget[2],1,
-                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
+                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+2*(29.5/3+2.5)));
 	}
 	  displacement = edge_H7_MuFilter[l+1]+LocBarUS + TVector3(-fUpstreamBarX/2, 0, 0);
 	  volH7_MuFilter->AddNode(volUpstreamDet,fNVetoPlanes+l,

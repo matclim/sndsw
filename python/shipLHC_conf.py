@@ -33,11 +33,17 @@ def configure(run,ship_geo,Gfield=''):
     Scifi.SetConfPar("Scifi/"+parName, parValue)
  detectorList.append(Scifi)
 
- MuFilter = ROOT.MuFilter("MuFilter",ROOT.kTRUE)
- for parName in ship_geo.MuFilter:
-    parValue = eval('ship_geo.MuFilter.'+parName)
-    MuFilter.SetConfPar("MuFilter/"+parName, parValue)
- detectorList.append(MuFilter)
+ #MuFilter = ROOT.MuFilter("MuFilter",ROOT.kTRUE)
+ #for parName in ship_geo.MuFilter:
+ #   parValue = eval('ship_geo.MuFilter.'+parName)
+ #   MuFilter.SetConfPar("MuFilter/"+parName, parValue)
+ #detectorList.append(MuFilter)
+
+ H7_MuFilter = ROOT.H7_MuFilter("H7_MuFilter",ROOT.kTRUE)
+ for parName in ship_geo.H7_MuFilter:
+    parValue = eval('ship_geo.H7_MuFilter.'+parName)
+    H7_MuFilter.SetConfPar("H7_MuFilter/"+parName, parValue)
+ detectorList.append(H7_MuFilter)
 
  detElements = {}
  if hasattr(run,'SetMaterials'):  
