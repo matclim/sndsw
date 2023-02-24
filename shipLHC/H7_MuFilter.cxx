@@ -166,15 +166,15 @@ void H7_MuFilter::ConstructGeometry()
 
 	TVector3 displacement;
 
-	//Definition of the box containing veto planes
-	TGeoVolumeAssembly *volVeto = new TGeoVolumeAssembly("volVeto");
+	Int_t fNVetoPlanes       = conf_ints["H7_MuFilter/NVetoPlanes"]; //Moved here because needed for later
+	//Definition of the box containing veto planes //Not needed for TBSND23
+	/*TGeoVolumeAssembly *volVeto = new TGeoVolumeAssembly("volVeto");
 	
 	//Veto Planes
 	Double_t fVetoBarX     = conf_floats["H7_MuFilter/VetoBarX"]; // Veto Bar dimensions
 	Double_t fVetoBarY     = conf_floats["H7_MuFilter/VetoBarY"];
 	Double_t fVetoBarZ     = conf_floats["H7_MuFilter/VetoBarZ"];
 	Double_t fVetoBarGap     = conf_floats["H7_MuFilter/VetoBarGap"];
-	Int_t fNVetoPlanes       = conf_ints["H7_MuFilter/NVetoPlanes"];
 	Int_t fNVetoBars          = conf_ints["H7_MuFilter/NVetoBars"];
 	Double_t fSupportBoxVW = conf_floats["H7_MuFilter/SupportBoxVW"]; // SupportBox dimensions
 	// local position of bottom horizontal bar to survey edge
@@ -196,7 +196,8 @@ void H7_MuFilter::ConstructGeometry()
 	volVetoBar->SetLineColor(kRed-3);
 	AddSensitiveVolume(volVetoBar);
 
-	//adding veto planes
+	//adding veto planes //not needed for TBSND23
+	
 	TGeoVolume* volVetoPlane;
 	for (int iplane=0; iplane < fNVetoPlanes; iplane++){
 	  
@@ -222,6 +223,7 @@ void H7_MuFilter::ConstructGeometry()
 		//adding to detector volume
 	top->AddNode(volVeto, 1,new TGeoTranslation(fVetoShiftX,fVetoShiftY,fVetoShiftZ)) ;
 
+	*/
 	//*****************************************UPSTREAM SECTION*********************************//
 
 		//Definition of the box containing Fe Blocks + Timing Detector planes 
@@ -308,14 +310,16 @@ void H7_MuFilter::ConstructGeometry()
 	//Target: between end of Iron target and scintillator 0.76cm
 	//gap between first scint and iron plate is 0.74cm
 	  if (edge_Iron[9][2] <0.1 && l==0) {
-		TGeoVolume *volFeTarget[3] = {gGeoManager->MakeBox("volScintTarget0",Scint,80./2, 60./2, 29.5/2/3),gGeoManager->MakeBox("volScintTarget1",Fe,80./2, 60./2, 29.5/2/3),gGeoManager->MakeBox("volScintTarget2",Scint,80./2, 60./2, 29.5/2/3)};
+		TGeoVolume *volFeTarget[3] = {gGeoManager->MakeBox("volScintTarget0",Fe,80./2, 60./2, 16.77/2/2),
+					      gGeoManager->MakeBox("volScintTarget1",Fe,80./2, 60./2, 16.77/2/2),
+					      gGeoManager->MakeBox("volScintTarget2",Fe,80./2, 60./2, (29.5-16.77)/2)};
 		volFeTarget[0]->SetLineColor(kGreen-4);
 		volFeTarget[1]->SetLineColor(kGreen-4);
 		volFeTarget[2]->SetLineColor(kGreen-4);
 
-		AddSensitiveVolume(volFeTarget[0]);
-		AddSensitiveVolume(volFeTarget[1]);
-		AddSensitiveVolume(volFeTarget[2]);
+	//	AddSensitiveVolume(volFeTarget[0]);
+	//	AddSensitiveVolume(volFeTarget[1]);
+	//	AddSensitiveVolume(volFeTarget[2]);
 
 		displacement = edge_Iron[l+1] - TVector3(80/2,-60/2,29.5/2+fFeBlockZ+3*fTargetScintillatorZ);
 		volH7_MuFilter->AddNode(volFeTarget[0],1,
@@ -370,11 +374,11 @@ void H7_MuFilter::ConstructGeometry()
 	for(Int_t l=0; l<fNDownstreamPlanes; l++)
 	{
 	// add iron blocks
-	if (l<fNDownstreamPlanes-1){
+	//temp if (l<fNDownstreamPlanes-1){
 		displacement = edge_Iron[l+fNUpstreamPlanes+1] - TVector3(fFeBlockX/2,-fFeBlockY/2,-fFeBlockZ/2);
 		volH7_MuFilter->AddNode(volFeBlock,l+fNUpstreamPlanes+fNVetoPlanes,
 				new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
-		}else if (edge_Iron[9][2] >0.1) {
+	/*temp	}else if (edge_Iron[9][2] >0.1) {
 // more iron
 		displacement = edge_Iron[l+fNUpstreamPlanes+1]  - TVector3(fFeBlockEndX/2,-fFeBlockEndY/2,-fFeBlockEndZ/2);
 		volH7_MuFilter->AddNode(volFeBlockEnd,1,
@@ -383,7 +387,7 @@ void H7_MuFilter::ConstructGeometry()
 		volH7_MuFilter->AddNode(volBlockBot,1,
 				new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
 	}
-
+	*/
 	// add detectors
 	string name = "volMuDownstreamDet_"+std::to_string(l);
 	volDownstreamDet = new TGeoVolumeAssembly(name.c_str());
