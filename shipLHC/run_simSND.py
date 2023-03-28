@@ -143,7 +143,10 @@ if userTask:
   run.AddTask(userTask)
 
 # -----Create geometry----------------------------------------------
-import shipLHC_conf as sndDet_conf
+if(options.testbeamH7):
+  import shipLHC_conf_H7 as sndDet_conf
+else:
+  import shipLHC_conf as sndDet_conf
 modules = sndDet_conf.configure(run,snd_geo)
 
 # -----Create PrimaryGenerator--------------------------------------
@@ -199,7 +202,7 @@ if simEngine=="Genie":
    tolerance_vtx_z = 1*u.m * 0.5/39
    # From first veto bar
    if(options.testbeamH7):
-     neutrino_vtx_start_z = snd_geo.H7_MuFilter.Veto1Dy - snd_geo.H7_MuFilter.VetoBarZ/2. - tolerance_vtx_z
+     neutrino_vtx_start_z = snd_geo.MuFilter.Veto1Dy - snd_geo.H7_MuFilter.VetoBarZ/2. - tolerance_vtx_z
    else:
      neutrino_vtx_start_z = snd_geo.MuFilter.Veto1Dy - snd_geo.MuFilter.VetoBarZ/2. - tolerance_vtx_z
    # To last Scifi plane

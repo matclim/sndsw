@@ -156,9 +156,7 @@ with ConfigRegistry.register_config("basic") as c:
         c.Scifi.station4t,c.Scifi.station4H0t,c.Scifi.station4H1t,c.Scifi.station4H2t,c.Scifi.station4V0t,c.Scifi.station4V1t,c.Scifi.station4V2t  =  0.164*u.ns,  0.000*u.ns,  -1.451*u.ns,  0.196*u.ns,   -2.025*u.ns,  -1.049*u.ns,  -0.938*u.ns
         c.Scifi.station5t,c.Scifi.station5H0t,c.Scifi.station5H1t,c.Scifi.station5H2t,c.Scifi.station5V0t,c.Scifi.station5V1t,c.Scifi.station5V2t  =   0.337*u.ns,  0.000*u.ns,  -1.157*u.ns,  -1.060*u.ns,   -0.627*u.ns,  -2.405*u.ns,  0.071*u.ns
 
-	#scintillator within H7 target geometry 
 	
-	c.MuFilter.TScintX,c.MuFilter.TScintY,c.MuFilter.TScintZ= 82.525*u.cm, 6.0*u.cm, 1.0*u.cm
 
 
 
