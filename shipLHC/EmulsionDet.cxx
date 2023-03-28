@@ -289,10 +289,10 @@ void EmulsionDet::ConstructGeometry()
 	volBrick->SetVisibility(kTRUE);
 
 //alignment
-	double dx_survey[fNWall] = {conf_floats["EmulsionDet/Xpos0"],conf_floats["EmulsionDet/Xpos1"],conf_floats["EmulsionDet/Xpos2"],conf_floats["EmulsionDet/Xpos3"],conf_floats["EmulsionDet/Xpos4"]};
-	double dy_survey[fNWall] = {conf_floats["EmulsionDet/Ypos0"],conf_floats["EmulsionDet/Ypos1"],conf_floats["EmulsionDet/Ypos2"],conf_floats["EmulsionDet/Ypos3"],conf_floats["EmulsionDet/Ypos4"]};
-	double dz_survey[fNWall] = {conf_floats["EmulsionDet/Zpos0"],conf_floats["EmulsionDet/Zpos1"],conf_floats["EmulsionDet/Zpos2"],conf_floats["EmulsionDet/Zpos3"],conf_floats["EmulsionDet/Zpos4"]};
-
+	if(fNWall){
+		double dx_survey[fNWall] = {conf_floats["EmulsionDet/Xpos0"],conf_floats["EmulsionDet/Xpos1"],conf_floats["EmulsionDet/Xpos2"],conf_floats["EmulsionDet/Xpos3"],conf_floats["EmulsionDet/Xpos4"]};
+		double dy_survey[fNWall] = {conf_floats["EmulsionDet/Ypos0"],conf_floats["EmulsionDet/Ypos1"],conf_floats["EmulsionDet/Ypos2"],conf_floats["EmulsionDet/Ypos3"],conf_floats["EmulsionDet/Ypos4"]};
+		double dz_survey[fNWall] = {conf_floats["EmulsionDet/Zpos0"],conf_floats["EmulsionDet/Zpos1"],conf_floats["EmulsionDet/Zpos2"],conf_floats["EmulsionDet/Zpos3"],conf_floats["EmulsionDet/Zpos4"]};
  	top->AddNode(volTarget,1,new TGeoTranslation(0,0,0));
 
 	//adding walls
@@ -305,6 +305,7 @@ void EmulsionDet::ConstructGeometry()
 		volTarget->AddNode(volWall,l,new TGeoTranslation(-dx_survey[l]-XDimension/2., dz_survey[l]+YDimension/2., dy_survey[l]+TotalWallZDim/2.+WallZBorder_offset)); //the survey points refer to the down-left corner
 		d_cl_z += BrickZ + TTrackerZ;
 	  }
+	}
 
 	//adding rows
 	Double_t d_cl_y = -WallYDim/2;

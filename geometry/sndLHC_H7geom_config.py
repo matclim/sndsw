@@ -13,9 +13,9 @@ with ConfigRegistry.register_config("basic") as c:
         c.EmulsionDet.PassiveOption = 1 #0 makes emulsion volumes active, 1 makes all emulsion volumes passive
         c.EmulsionDet.row = 2
         c.EmulsionDet.col = 2
-        c.EmulsionDet.wall= 5
-        c.EmulsionDet.target = 1  #number of neutrino target volumes
-        c.EmulsionDet.n_plates = 59
+        c.EmulsionDet.wall= 0
+        c.EmulsionDet.target = 0  #number of neutrino target volumes
+        c.EmulsionDet.n_plates = 0
         c.EmulsionDet.EmTh = 0.0070 * u.cm
         c.EmulsionDet.EmX = 19.2 * u.cm
         c.EmulsionDet.EmY = 19.2 * u.cm
