@@ -244,7 +244,14 @@ with ConfigRegistry.register_config("basic") as c:
         c.H7_MuFilter.TScintX=0.1
         c.H7_MuFilter.TScintY=0.1
         c.H7_MuFilter.TScintZ=0.1
- 
+
+	#Beam Counter Parameters
+
+        c.H7_MuFilter.H7_BC_Scint_rad   = 5*u.mm
+        c.H7_MuFilter.H7_BC_Scint_thick = 5*u.mm
+        c.H7_MuFilter.H7_BC_ScintX      = 33.08*u.cm
+        c.H7_MuFilter.H7_BC_ScintY      = 29.15*u.cm
+        c.H7_MuFilter.H7_BC_ScintZ      = 45.705*u.cm
 
        # VETO support box
         c.H7_MuFilter.SupportBoxVW = 4*u.mm

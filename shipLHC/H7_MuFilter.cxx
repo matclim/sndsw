@@ -223,6 +223,11 @@ void H7_MuFilter::ConstructGeometry()
 		//adding to detector volume
 	top->AddNode(volVeto, 1,new TGeoTranslation(fVetoShiftX,fVetoShiftY,fVetoShiftZ)) ;
 
+
+	
+	
+
+
 	*/
 	//*****************************************UPSTREAM SECTION*********************************//
 
@@ -253,7 +258,7 @@ void H7_MuFilter::ConstructGeometry()
 	//Iron blocks volume definition
 	TGeoVolume *volFeBlock = gGeoManager->MakeBox("volFeBlock",Fe,fFeBlockX/2, fFeBlockY/2, fFeBlockZ/2); 
 	//volFeBlock->SetLineColor(kGreen-4);
-	volFeBlock->SetLineColor(kBlue);
+	volFeBlock->SetLineColor(kGreen-4);
 	TGeoVolume *volFeBlockEnd = gGeoManager->MakeBox("volFeBlockEnd",Fe,fFeBlockEndX/2, fFeBlockEndY/2, fFeBlockEndZ/2);
 	//volFeBlockEnd->SetLineColor(kGreen-4);
 	volFeBlockEnd->SetLineColor(kYellow);
@@ -301,6 +306,12 @@ void H7_MuFilter::ConstructGeometry()
 	Double_t fTargetThick2 = conf_floats["H7_MuFilter/H7_TT2"];
 	Double_t fTargetThick3 = conf_floats["H7_MuFilter/H7_TT3"];
 	
+	//H7 Beam Counter Parameters
+	Double_t fBC_rad = conf_floats["H7_MuFilter/H7_BC_Scint_rad"];
+	Double_t fBC_thick = conf_floats["H7_MuFilter/H7_BC_Scint_thick"];
+	Double_t fBC_ScintX = conf_floats["H7_MuFilter/H7_BC_ScintX"];
+	Double_t fBC_ScintY = conf_floats["H7_MuFilter/H7_BC_ScintY"];
+	Double_t fBC_ScintZ = conf_floats["H7_MuFilter/H7_BC_ScintZ"];
 
 	//adding staggered bars, first part, only 11 bars, (single stations, readout on both ends)
 	TGeoVolume *volMuUpstreamBar = gGeoManager->MakeBox("volMuUpstreamBar",Scint,fUpstreamBarX/2, fUpstreamBarY/2, fUpstreamBarZ/2);
@@ -452,6 +463,16 @@ void H7_MuFilter::ConstructGeometry()
  		// Andrew added a 60 here to make each horizontal + vertical sub-plane contain bars given detIDs as one plane. So the first bar in the vert. sub plane is the 60th etc. 
 			}
 	}
+
+	//****************************************BEAM COUNTER**************************************//
+	
+	TGeoVolumeAssembly *volH7_BeamCounter = new TGeoVolumeAssembly("volH7_MuFilter");
+	TGeoVolume *volBeamCounterScintillator=gGeoManager->MakeTube("BeamCounterPlasticScintillator",Scint,0,fBC_rad,fBC_thick);
+	volBeamCounterScintillator->SetLineColor(kRed);
+	AddSensitiveVolume(volBeamCounterScintillator);
+	volH7_BeamCounter->AddNode(volBeamCounterScintillator,15000,new TGeoTranslation(fBC_ScintX,fBC_ScintY,fBC_ScintZ));
+	top->AddNode(volH7_BeamCounter, 1,new TGeoTranslation(0,0,0)) ;
+
 }
 
 Bool_t  H7_MuFilter::ProcessHits(FairVolume* vol)
