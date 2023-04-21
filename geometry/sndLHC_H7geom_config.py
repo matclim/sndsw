@@ -9,137 +9,136 @@ with ConfigRegistry.register_config("basic") as c:
 
         # Antonia, 482000mm (FASER+2, P3) + 1017mm (DZ) + 245mm (centre emulsion),z=483262./10.*u.cm
         # centre emulsion now 326.2cm downstream from origin.
-        c.EmulsionDet = AttrDict(z=326.2*u.cm)
-        c.EmulsionDet.PassiveOption = 1 #0 makes emulsion volumes active, 1 makes all emulsion volumes passive
-        c.EmulsionDet.row = 2
-        c.EmulsionDet.col = 2
-        c.EmulsionDet.wall= 0
-        c.EmulsionDet.target = 0  #number of neutrino target volumes
-        c.EmulsionDet.n_plates = 0
-        c.EmulsionDet.EmTh = 0.0070 * u.cm
-        c.EmulsionDet.EmX = 19.2 * u.cm
-        c.EmulsionDet.EmY = 19.2 * u.cm
-        c.EmulsionDet.PBTh = 0.0175 * u.cm
-        c.EmulsionDet.PassiveTh = 0.1 * u.cm
-        c.EmulsionDet.EPlW = 2* c.EmulsionDet.EmTh + c.EmulsionDet.PBTh
-        c.EmulsionDet.AllPW = c.EmulsionDet.PassiveTh + c.EmulsionDet.EPlW
+        #c.EmulsionDet = AttrDict(z=326.2*u.cm)
+        #c.EmulsionDet.PassiveOption = 1 #0 makes emulsion volumes active, 1 makes all emulsion volumes passive
+        #c.EmulsionDet.row = 2
+        #c.EmulsionDet.col = 2
+        #c.EmulsionDet.wall= 0
+        #c.EmulsionDet.target = 0  #number of neutrino target volumes
+        #c.EmulsionDet.n_plates = 0
+        #c.EmulsionDet.EmTh = 0.0070 * u.cm
+        #c.EmulsionDet.EmX = 19.2 * u.cm
+        #c.EmulsionDet.EmY = 19.2 * u.cm
+        #c.EmulsionDet.PBTh = 0.0175 * u.cm
+        #c.EmulsionDet.PassiveTh = 0.1 * u.cm
+        #c.EmulsionDet.EPlW = 2* c.EmulsionDet.EmTh + c.EmulsionDet.PBTh
+        #c.EmulsionDet.AllPW = c.EmulsionDet.PassiveTh + c.EmulsionDet.EPlW
 
-        c.EmulsionDet.BrPackZ = 0.*u.cm
-        c.EmulsionDet.BrPackX = 2*0.05*u.cm
-        c.EmulsionDet.BrPackY = 2*0.05*u.cm
-        
-        c.EmulsionDet.BrX = c.EmulsionDet.EmX + c.EmulsionDet.BrPackX
-        c.EmulsionDet.BrY = c.EmulsionDet.EmY + c.EmulsionDet.BrPackY
-        c.EmulsionDet.BrZ = c.EmulsionDet.n_plates * c.EmulsionDet.AllPW + c.EmulsionDet.EPlW + c.EmulsionDet.BrPackZ
+        #c.EmulsionDet.BrPackZ = 0.*u.cm
+        #c.EmulsionDet.BrPackX = 2*0.05*u.cm
+        #c.EmulsionDet.BrPackY = 2*0.05*u.cm
+        #
+        #c.EmulsionDet.BrX = c.EmulsionDet.EmX + c.EmulsionDet.BrPackX
+        #c.EmulsionDet.BrY = c.EmulsionDet.EmY + c.EmulsionDet.BrPackY
+        #c.EmulsionDet.BrZ = c.EmulsionDet.n_plates * c.EmulsionDet.AllPW + c.EmulsionDet.EPlW + c.EmulsionDet.BrPackZ
 
-        c.EmulsionDet.xdim = 42.2 *u.cm #external wall dimensions
-        c.EmulsionDet.ydim = 42.2 *u.cm
-        c.EmulsionDet.TotalWallZDim = 10.0 *u.cm #wall dimension along z, including border
-        c.EmulsionDet.WallXDim = 38.6 *u.cm #internal wall dimensions
-        c.EmulsionDet.WallYDim = 38.6 *u.cm
-        c.EmulsionDet.WallZDim = 8.15 *u.cm
-        c.EmulsionDet.WallZBorder_offset = 4.75 * u.mm
-        c.EmulsionDet.TTz = 3.0*u.cm
-        c.EmulsionDet.zdim = c.EmulsionDet.wall* c.EmulsionDet.TotalWallZDim + c.EmulsionDet.wall*c.EmulsionDet.TTz
-        c.EmulsionDet.ShiftX = -8.0*u.cm - c.EmulsionDet.xdim/2.
-        c.EmulsionDet.ShiftY = 15.5*u.cm + c.EmulsionDet.ydim/2.
+        #c.EmulsionDet.xdim = 42.2 *u.cm #external wall dimensions
+        #c.EmulsionDet.ydim = 42.2 *u.cm
+        #c.EmulsionDet.TotalWallZDim = 10.0 *u.cm #wall dimension along z, including border
+        #c.EmulsionDet.WallXDim = 38.6 *u.cm #internal wall dimensions
+        #c.EmulsionDet.WallYDim = 38.6 *u.cm
+        #c.EmulsionDet.WallZDim = 8.15 *u.cm
+        #c.EmulsionDet.WallZBorder_offset = 4.75 * u.mm
+        #c.EmulsionDet.TTz = 3.0*u.cm
+        #c.EmulsionDet.zdim = c.EmulsionDet.wall* c.EmulsionDet.TotalWallZDim + c.EmulsionDet.wall*c.EmulsionDet.TTz
+        #c.EmulsionDet.ShiftX = -8.0*u.cm - c.EmulsionDet.xdim/2.
+        #c.EmulsionDet.ShiftY = 15.5*u.cm + c.EmulsionDet.ydim/2.
 
-        c.EmulsionDet.startpos =  -25.4750 * u.cm + c.EmulsionDet.z
-        c.EmulsionDet.zC = c.EmulsionDet.startpos + c.EmulsionDet.zdim/2.
-        
-        # survey points in survey coordinate system!
-        c.EmulsionDet.Xpos0,c.EmulsionDet.Ypos0,c.EmulsionDet.Zpos0 = 5.74*u.cm, 288.89*u.cm, 16.63*u.cm
-        c.EmulsionDet.Xpos1,c.EmulsionDet.Ypos1,c.EmulsionDet.Zpos1 = 5.74*u.cm, 301.89*u.cm, 16.63*u.cm
-        c.EmulsionDet.Xpos2,c.EmulsionDet.Ypos2,c.EmulsionDet.Zpos2 = 5.74*u.cm, 314.89*u.cm, 16.63*u.cm
-        c.EmulsionDet.Xpos3,c.EmulsionDet.Ypos3,c.EmulsionDet.Zpos3 = 5.74*u.cm, 327.89*u.cm, 16.63*u.cm
-        c.EmulsionDet.Xpos4,c.EmulsionDet.Ypos4,c.EmulsionDet.Zpos4 = 5.74*u.cm, 340.89*u.cm, 16.63*u.cm
+        #c.EmulsionDet.startpos =  -25.4750 * u.cm + c.EmulsionDet.z
+        #c.EmulsionDet.zC = c.EmulsionDet.startpos + c.EmulsionDet.zdim/2.
+        #
+        ## survey points in survey coordinate system!
+        #c.EmulsionDet.Xpos0,c.EmulsionDet.Ypos0,c.EmulsionDet.Zpos0 = 5.74*u.cm, 288.89*u.cm, 16.63*u.cm
+        #c.EmulsionDet.Xpos1,c.EmulsionDet.Ypos1,c.EmulsionDet.Zpos1 = 5.74*u.cm, 301.89*u.cm, 16.63*u.cm
+        #c.EmulsionDet.Xpos2,c.EmulsionDet.Ypos2,c.EmulsionDet.Zpos2 = 5.74*u.cm, 314.89*u.cm, 16.63*u.cm
+        #c.EmulsionDet.Xpos3,c.EmulsionDet.Ypos3,c.EmulsionDet.Zpos3 = 5.74*u.cm, 327.89*u.cm, 16.63*u.cm
+        #c.EmulsionDet.Xpos4,c.EmulsionDet.Ypos4,c.EmulsionDet.Zpos4 = 5.74*u.cm, 340.89*u.cm, 16.63*u.cm
 
         #SciFi parameters
-        c.Scifi = AttrDict(z=0*u.cm)
-        c.Scifi.xdim = 39.0 * u.cm #sensitive only
-        c.Scifi.ydim = 39.0 * u.cm 
-        c.Scifi.zdim = c.EmulsionDet.TTz
-        c.Scifi.DZ = c.EmulsionDet.BrZ
-        c.Scifi.nmats = 0
-        c.Scifi.nscifi   = 0
+        c.H7_Scifi = AttrDict(z=0*u.cm)
+        c.H7_Scifi.xdim = 13.0 * u.cm #sensitive only, real 13cm
+        c.H7_Scifi.ydim = 13.0 * u.cm 
+        c.H7_Scifi.zdim = 3*u.cm 
+        c.H7_Scifi.DZ = 1 * u.cm 
+        c.H7_Scifi.nmats = 1
+        c.H7_Scifi.nscifi   = 3
 
         #SiPM parameters
-        c.Scifi.channel_width     = 0.25 *u.mm
-        c.Scifi.sipm_edge = 0.17*u.mm    # on both ends
-        c.Scifi.charr_gap = 0.2 *u.mm
-        c.Scifi.charr_width = 64 * c.Scifi.channel_width
-        c.Scifi.sipm_diegap     = 0.06*u.mm
-        c.Scifi.SiPMarray_width = c.Scifi.sipm_edge+c.Scifi.charr_width+c.Scifi.charr_gap+c.Scifi.charr_width+c.Scifi.sipm_edge
-        c.Scifi.nsipm_channels  = 128
-        c.Scifi.nsipm_mat             = 4
-        c.Scifi.nsipms = c.Scifi.nsipm_mat *  c.Scifi.nmats  # 12 per SciFi plane
-        c.Scifi.sipmarr_width  = c.Scifi.charr_gap + 2.*c.Scifi.charr_width
-        c.Scifi.firstChannelX = -19.528*u.cm  # to agree with SiPM positions of engineering design
+        c.H7_Scifi.channel_width     = 0.25 *u.mm
+        c.H7_Scifi.sipm_edge = 0.17*u.mm    # on both ends
+        c.H7_Scifi.charr_gap = 0.2 *u.mm
+        c.H7_Scifi.charr_width = 64 * c.H7_Scifi.channel_width
+        c.H7_Scifi.sipm_diegap     = 0.06*u.mm
+        c.H7_Scifi.SiPMarray_width = c.H7_Scifi.sipm_edge+c.H7_Scifi.charr_width+c.H7_Scifi.charr_gap+c.H7_Scifi.charr_width+c.H7_Scifi.sipm_edge
+        c.H7_Scifi.nsipm_channels  = 128
+        c.H7_Scifi.nsipm_mat             = 4
+        c.H7_Scifi.nsipms = c.H7_Scifi.nsipm_mat *  c.H7_Scifi.nmats  # 12 per SciFi plane
+        c.H7_Scifi.sipmarr_width  = c.H7_Scifi.charr_gap + 2.*c.H7_Scifi.charr_width
+        c.H7_Scifi.firstChannelX = -19.528*u.cm  # to agree with SiPM positions of engineering design
 
-        c.Scifi.nfibers_shortrow = 471
-        c.Scifi.nfibers_longrow  = 472
-        c.Scifi.nfibers_z = 6
+        c.H7_Scifi.nfibers_shortrow = 471
+        c.H7_Scifi.nfibers_longrow  = 472
+        c.H7_Scifi.nfibers_z = 6
         
 # Guido: Fibre mat total width 500um less wide than 4 SiPM arrays mounted on a single bar, therefore 32.6mm x 4 -0.5=129.9mm 
-        c.Scifi.scifimat_width = (c.Scifi.SiPMarray_width+c.Scifi.sipm_diegap)*c.Scifi.nsipm_mat -0.5*u.mm
-        c.Scifi.scifimat_length = c.Scifi.ydim
-        c.Scifi.scifimat_z = 0.135 *u.cm
-        c.Scifi.epoxymat_z = 0.17 *u.cm
-        c.Scifi.scifimat_gap = 0.05 *u.cm
+        c.H7_Scifi.scifimat_width = (c.H7_Scifi.SiPMarray_width+c.H7_Scifi.sipm_diegap)*c.H7_Scifi.nsipm_mat -0.5*u.mm
+        c.H7_Scifi.scifimat_length = c.H7_Scifi.ydim
+        c.H7_Scifi.scifimat_z = 0.135 *u.cm
+        c.H7_Scifi.epoxymat_z = 0.17 *u.cm
+        c.H7_Scifi.scifimat_gap = 0.05 *u.cm
         
-        c.Scifi.fiber_length = c.Scifi.scifimat_length
-        c.Scifi.scintcore_rmax = 0.011 *u.cm  
-        c.Scifi.clad1_rmax = 0.01175 *u.cm    
-        c.Scifi.clad2_rmax = 0.0125 *u.cm
+        c.H7_Scifi.fiber_length = c.H7_Scifi.scifimat_length
+        c.H7_Scifi.scintcore_rmax = 0.011 *u.cm  
+        c.H7_Scifi.clad1_rmax = 0.01175 *u.cm    
+        c.H7_Scifi.clad2_rmax = 0.0125 *u.cm
 
-        c.Scifi.horizontal_pitch = 0.0275 *u.cm
-        c.Scifi.vertical_pitch = 0.021 *u.cm
-        c.Scifi.rowlong_offset = 0.035 *u.cm 
-        c.Scifi.rowshort_offset = 0.0215 *u.cm 
+        c.H7_Scifi.horizontal_pitch = 0.0275 *u.cm
+        c.H7_Scifi.vertical_pitch = 0.021 *u.cm
+        c.H7_Scifi.rowlong_offset = 0.035 *u.cm 
+        c.H7_Scifi.rowshort_offset = 0.0215 *u.cm 
 
-        c.Scifi.carbonfiber_z = 0.02 *u.cm
-        c.Scifi.honeycomb_z = 0.5 *u.cm
+        c.H7_Scifi.carbonfiber_z = 0.02 *u.cm
+        c.H7_Scifi.honeycomb_z = 0.5 *u.cm
        
-        c.Scifi.plastbar_x = 1.5 *u.cm
-        c.Scifi.plastbar_y = c.Scifi.ydim
-        c.Scifi.plastbar_z = 0.195 *u.cm
+        c.H7_Scifi.plastbar_x = 1.5 *u.cm
+        c.H7_Scifi.plastbar_y = c.H7_Scifi.ydim
+        c.H7_Scifi.plastbar_z = 0.195 *u.cm
 
-        c.Scifi.scifi_separation = c.Scifi.zdim + c.EmulsionDet.BrZ  
-        c.Scifi.offset_z = - c.EmulsionDet.zdim/2 + c.EmulsionDet.BrZ  #SciFi starts at the end of the first ECC
+        c.H7_Scifi.scifi_separation = 10*u.cm 
+	#Candidate for z position 
+        c.H7_Scifi.offset_z = - 100*u.cm  #SciFi starts at the end of the first ECC
        
-        c.Scifi.timeResol = 150.*u.picosecond
+        c.H7_Scifi.timeResol = 150.*u.picosecond
 
         # absolute edge point positions in survey coordinate system
-        c.Scifi.Xpos0,c.Scifi.Ypos0,c.Scifi.Zpos0 = 4.34*u.cm, 298.94*u.cm, 15.22*u.cm
-        c.Scifi.Xpos1,c.Scifi.Ypos1,c.Scifi.Zpos1 = 4.34*u.cm, 311.94*u.cm, 15.22*u.cm
-        c.Scifi.Xpos2,c.Scifi.Ypos2,c.Scifi.Zpos2 = 4.34*u.cm, 324.94*u.cm, 15.22*u.cm
-        c.Scifi.Xpos3,c.Scifi.Ypos3,c.Scifi.Zpos3 = 4.34*u.cm, 337.94*u.cm, 15.22*u.cm
-        c.Scifi.Xpos4,c.Scifi.Ypos4,c.Scifi.Zpos4 = 4.34*u.cm, 350.94*u.cm, 15.22*u.cm
+        c.H7_Scifi.Xpos0,c.H7_Scifi.Ypos0,c.H7_Scifi.Zpos0 = 4.34*u.cm, 298.94*u.cm, 15.22*u.cm
+        c.H7_Scifi.Xpos1,c.H7_Scifi.Ypos1,c.H7_Scifi.Zpos1 = 4.34*u.cm, 311.94*u.cm, 15.22*u.cm
+        c.H7_Scifi.Xpos2,c.H7_Scifi.Ypos2,c.H7_Scifi.Zpos2 = 4.34*u.cm, 324.94*u.cm, 15.22*u.cm
 
-# Scifi technical drawing, distance from first channel on vertical / horizontal plane to edge point  225,225,0, xy plane z perpendicularc.Scifi.ydim
-        c.Scifi.EdgeAX, c.Scifi.EdgeAY, c.Scifi.EdgeAZ =  225*u.mm, 225*u.mm, 0*u.mm
+# H7_Scifi technical drawing, distance from first channel on vertical / horizontal plane to edge point  225,225,0, xy plane z perpendicularc.H7_Scifi.ydim
+        c.H7_Scifi.EdgeAX, c.H7_Scifi.EdgeAY, c.H7_Scifi.EdgeAZ =  225*u.mm, 225*u.mm, 0*u.mm
 
-        c.Scifi.FirstChannelVX,c.Scifi.FirstChannelVY,c.Scifi.FirstChannelVZ = -195.28*u.mm, -200.0*u.mm, -12.92*u.mm
+        c.H7_Scifi.FirstChannelVX,c.H7_Scifi.FirstChannelVY,c.H7_Scifi.FirstChannelVZ = -195.28*u.mm, -200.0*u.mm, -12.92*u.mm
 
-        c.Scifi.FirstChannelHX,c.Scifi.FirstChannelHY,c.Scifi.FirstChannelHZ = -200.0*u.mm, -195.28*u.mm, -7.07*u.mm
+        c.H7_Scifi.FirstChannelHX,c.H7_Scifi.FirstChannelHY,c.H7_Scifi.FirstChannelHZ = -200.0*u.mm, -195.28*u.mm, -7.07*u.mm
 
-# Local Scifi position of first channel on a vertical scifi plane in software
-        c.Scifi.LfirstChannelVX,c.Scifi.LfirstChannelVY,c.Scifi.LfirstChannelVZ = -195.135*u.mm, 195.0*u.mm, 11.85*u.mm   # sipm on top
+# Local H7_Scifi position of first channel on a vertical scifi plane in software
+        c.H7_Scifi.LfirstChannelVX,c.H7_Scifi.LfirstChannelVY,c.H7_Scifi.LfirstChannelVZ = -195.135*u.mm, 195.0*u.mm, 11.85*u.mm   # sipm on top
 
-# Local Scifi position of last channel (=first channel on technical drawing) on a horizontal scifi plane in software
-        c.Scifi.LfirstChannelHX,c.Scifi.LfirstChannelHY,c.Scifi.LfirstChannelHZ = -195.0*u.mm, 195.178*u.mm,  6.25*u.mm  # sipm on the right side direction away from IP1
+# Local H7_Scifi position of last channel (=first channel on technical drawing) on a horizontal scifi plane in software
+        c.H7_Scifi.LfirstChannelHX,c.H7_Scifi.LfirstChannelHY,c.H7_Scifi.LfirstChannelHZ = -195.0*u.mm, 195.178*u.mm,  6.25*u.mm  # sipm on the right side direction away from IP1
 
  # relative mat alignments
-        c.Scifi.LocM100,c.Scifi.LocM101,c.Scifi.LocM102 =  0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM110,c.Scifi.LocM111,c.Scifi.LocM112=   0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM200,c.Scifi.LocM201,c.Scifi.LocM202=   0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM210,c.Scifi.LocM211,c.Scifi.LocM212 =  0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM300,c.Scifi.LocM301,c.Scifi.LocM302=   0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM310,c.Scifi.LocM311,c.Scifi.LocM312=   0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM400,c.Scifi.LocM401,c.Scifi.LocM402 =  0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM410,c.Scifi.LocM411,c.Scifi.LocM412=   0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM500,c.Scifi.LocM501,c.Scifi.LocM502=   0.0*u.um,     0.0*u.um,          0.0*u.um
-        c.Scifi.LocM510,c.Scifi.LocM511,c.Scifi.LocM512=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM100,c.H7_Scifi.LocM101,c.H7_Scifi.LocM102 =  0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM110,c.H7_Scifi.LocM111,c.H7_Scifi.LocM112=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM200,c.H7_Scifi.LocM201,c.H7_Scifi.LocM202=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM210,c.H7_Scifi.LocM211,c.H7_Scifi.LocM212 =  0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM300,c.H7_Scifi.LocM301,c.H7_Scifi.LocM302=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM310,c.H7_Scifi.LocM311,c.H7_Scifi.LocM312=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM400,c.H7_Scifi.LocM401,c.H7_Scifi.LocM402 =  0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM410,c.H7_Scifi.LocM411,c.H7_Scifi.LocM412=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM500,c.H7_Scifi.LocM501,c.H7_Scifi.LocM502=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM510,c.H7_Scifi.LocM511,c.H7_Scifi.LocM512=   0.0*u.um,     0.0*u.um,          0.0*u.um
 
         c.H7_MuFilter = AttrDict(z=0*u.cm)
         #coordinates in local gravity based system
@@ -245,11 +244,11 @@ with ConfigRegistry.register_config("basic") as c:
         c.H7_MuFilter.TScintY=0.1
         c.H7_MuFilter.TScintZ=0.1
 
-	#Beam Counter Parameters
+	#Beam counter Parameters
 
         c.H7_MuFilter.H7_BC_Scint_rad   = 5*u.mm
         c.H7_MuFilter.H7_BC_Scint_thick = 5*u.mm
-        c.H7_MuFilter.H7_BC_ScintX      = 33.08*u.cm
+        c.H7_MuFilter.H7_BC_ScintX      = -33.08*u.cm
         c.H7_MuFilter.H7_BC_ScintY      = 29.15*u.cm
         c.H7_MuFilter.H7_BC_ScintZ      = 45.705*u.cm
 
@@ -279,46 +278,44 @@ with ConfigRegistry.register_config("basic") as c:
         c.Floor.DZ = 0.
 
 # for H6 / H8 testbeam and commissioning
-        H6 = True
-        if H6:
-           c.Floor.z = 0   # no tunnel, no slope
-           c.H7_MuFilter.Iron9Dy = 0*u.mm # move iron blocks at the end out of the way
-# scifi moved 46cm behind the iron block of second DS station and lifted by 10-15 cm.
-# equal to move H7_MuFilter in front of target and lower by 10-15cm, from 289 to 538+46, delta = -295
-           c.H7_MuFilter.ShiftX =   4.5*u.cm
-           c.H7_MuFilter.ShiftY =   -15.5*u.cm
-           c.H7_MuFilter.ShiftZ = -275.0*u.cm            # -295cm was 20cm too much
-# for H6, Veto  placed directly in front of first US
-           c.H7_MuFilter.VetoShiftZ = 70*u.cm + c.H7_MuFilter.ShiftZ
-           c.H7_MuFilter.VetoShiftX = -13.5*u.cm
-           c.H7_MuFilter.VetoShiftY = -17.7*u.cm
-# fine adjustements
-           c.H7_MuFilter.Muon8Dx = -4.7*u.mm - 4*u.cm
-           c.H7_MuFilter.Muon7Dx = -47.1*u.mm + 0.74*u.cm
-           c.H7_MuFilter.Muon1Dz = 146.6*u.mm - 2.3*u.cm
-           c.H7_MuFilter.Muon2Dz = 136.6*u.mm - 1.5*u.cm
-           c.H7_MuFilter.Muon5Dz = 127.7*u.mm + 0.25*u.cm
-           c.H7_MuFilter.Muon7Dz = 127.7*u.mm + 0.25*u.cm
-           c.H7_MuFilter.Muon8Dz = 127.7*u.mm + 0.56*u.cm
-# from track alignment
-           c.Scifi.Zpos0+=  537.00  *u.um
-           c.Scifi.Xpos0+=  -1177.09  *u.um
-           c.Scifi.Zpos1+=  113.00  *u.um
-           c.Scifi.Xpos1+=  -810.00  *u.um
-           c.Scifi.Zpos2+=   22.00  *u.um
-           c.Scifi.Xpos2+=  1602.8  *u.um
-           c.Scifi.Zpos3+=  162.62  *u.um
-           c.Scifi.Xpos3+=  -322.53  *u.um
-           c.Scifi.Zpos4+=  229.08  *u.um
-           c.Scifi.Xpos4+= -122.04  *u.um
-# relative mat alignments
-           c.Scifi.LocM100,c.Scifi.LocM101,c.Scifi.LocM102 =  0.0*u.um,     0.0*u.um,          0.0*u.um
-           c.Scifi.LocM110,c.Scifi.LocM111,c.Scifi.LocM112=   14.91*u.um, -29.82*u.um,     14.91*u.um
-           c.Scifi.LocM200,c.Scifi.LocM201,c.Scifi.LocM202=   0.0*u.um,     0.0*u.um,          0.0*u.um
-           c.Scifi.LocM210,c.Scifi.LocM211,c.Scifi.LocM212 =  0.0*u.um,     0.0*u.um,          0.0*u.um
-           c.Scifi.LocM300,c.Scifi.LocM301,c.Scifi.LocM302=   0.0*u.um,     0.0*u.um,          0.0*u.um
-           c.Scifi.LocM310,c.Scifi.LocM311,c.Scifi.LocM312=   30.80*u.um, -61.61*u.um,     30.80*u.um
-           c.Scifi.LocM400,c.Scifi.LocM401,c.Scifi.LocM402 = -65.64*u.um, -37.62*u.um,     103.25*u.um
-           c.Scifi.LocM410,c.Scifi.LocM411,c.Scifi.LocM412=  -1.49*u.um,    24.0*u.um,      -22.52*u.um
-           c.Scifi.LocM500,c.Scifi.LocM501,c.Scifi.LocM502=  -0.08*u.um,   -46.78*u.um,      46.86*u.um
-           c.Scifi.LocM510,c.Scifi.LocM511,c.Scifi.LocM512=  -230.92*u.um, 292.28*u.um,   -61.36*u.um
+        c.Floor.z = 0   # no tunnel, no slope
+        c.H7_MuFilter.Iron9Dy = 0*u.mm # move iron blocks at the end out of the way
+# scifi ed 46cm behind the iron block of second DS station and lifted by 10-15 cm.
+# equal move H7_MuFilter in front of target and lower by 10-15cm, from 289 to 538+46, delta = -295
+        c.H7_MuFilter.ShiftX =   4.5*u.cm
+        c.H7_MuFilter.ShiftY =   -15.5*u.cm
+        c.H7_MuFilter.ShiftZ = -275.0*u.cm            # -295cm was 20cm too much
+# for H6eto  placed directly in front of first US
+        c.H7_MuFilter.VetoShiftZ = 70*u.cm + c.H7_MuFilter.ShiftZ
+        c.H7_MuFilter.VetoShiftX = -13.5*u.cm
+        c.H7_MuFilter.VetoShiftY = -17.7*u.cm
+# fine astements
+        c.H7_MuFilter.Muon8Dx = -4.7*u.mm - 4*u.cm
+        c.H7_MuFilter.Muon7Dx = -47.1*u.mm + 0.74*u.cm
+        c.H7_MuFilter.Muon1Dz = 146.6*u.mm - 2.3*u.cm
+        c.H7_MuFilter.Muon2Dz = 136.6*u.mm - 1.5*u.cm
+        c.H7_MuFilter.Muon5Dz = 127.7*u.mm + 0.25*u.cm
+        c.H7_MuFilter.Muon7Dz = 127.7*u.mm + 0.25*u.cm
+        c.H7_MuFilter.Muon8Dz = 127.7*u.mm + 0.56*u.cm
+# from tk alignment
+        c.H7_Scifi.Zpos0+=  537.00  *u.um
+        c.H7_Scifi.Xpos0+=  -1177.09  *u.um
+        c.H7_Scifi.Zpos1+=  113.00  *u.um
+        c.H7_Scifi.Xpos1+=  -810.00  *u.um
+        c.H7_Scifi.Zpos2+=   22.00  *u.um
+        c.H7_Scifi.Xpos2+=  1602.8  *u.um
+        #c.H7_Scifi.Zpos3+=  162.62  *u.um
+        #c.H7_Scifi.Xpos3+=  -322.53  *u.um
+        #c.H7_Scifi.Zpos4+=  229.08  *u.um
+        #c.H7_Scifi.Xpos4+= -122.04  *u.um
+# relatimat alignments
+        c.H7_Scifi.LocM100,c.H7_Scifi.LocM101,c.H7_Scifi.LocM102 =  0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM110,c.H7_Scifi.LocM111,c.H7_Scifi.LocM112=   14.91*u.um, -29.82*u.um,     14.91*u.um
+        c.H7_Scifi.LocM200,c.H7_Scifi.LocM201,c.H7_Scifi.LocM202=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM210,c.H7_Scifi.LocM211,c.H7_Scifi.LocM212 =  0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM300,c.H7_Scifi.LocM301,c.H7_Scifi.LocM302=   0.0*u.um,     0.0*u.um,          0.0*u.um
+        c.H7_Scifi.LocM310,c.H7_Scifi.LocM311,c.H7_Scifi.LocM312=   30.80*u.um, -61.61*u.um,     30.80*u.um
+        c.H7_Scifi.LocM400,c.H7_Scifi.LocM401,c.H7_Scifi.LocM402 = -65.64*u.um, -37.62*u.um,     103.25*u.um
+        c.H7_Scifi.LocM410,c.H7_Scifi.LocM411,c.H7_Scifi.LocM412=  -1.49*u.um,    24.0*u.um,      -22.52*u.um
+        c.H7_Scifi.LocM500,c.H7_Scifi.LocM501,c.H7_Scifi.LocM502=  -0.08*u.um,   -46.78*u.um,      46.86*u.um
+        c.H7_Scifi.LocM510,c.H7_Scifi.LocM511,c.H7_Scifi.LocM512=  -230.92*u.um, 292.28*u.um,   -61.36*u.um

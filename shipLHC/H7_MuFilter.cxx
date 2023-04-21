@@ -62,6 +62,7 @@ fLength(-1.),
 fELoss(-1),
 fH7_MuFilterPointCollection(new TClonesArray("H7_MuFilterPoint"))
 {
+std::cout << "H7_MuFilter constructed" << std::endl;
 }
 
 H7_MuFilter::H7_MuFilter(const char* name, Bool_t Active,const char* Title)
@@ -75,6 +76,7 @@ fLength(-1.),
 fELoss(-1),
 fH7_MuFilterPointCollection(new TClonesArray("H7_MuFilterPoint"))
 {
+std::cout << "H7_MuFilter constructed" << std::endl;
 }
 
 H7_MuFilter::~H7_MuFilter()
@@ -113,6 +115,7 @@ Int_t H7_MuFilter::InitMedium(const char* name)
 
 void H7_MuFilter::ConstructGeometry()
 {
+	std::cout << "H7_MuFilter geometry constructing" << std::endl;
 	TGeoVolume *top=gGeoManager->FindVolumeFast("Detector");
 	if(!top)  LOG(ERROR) << "no Detector volume found " ;
 

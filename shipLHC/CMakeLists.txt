@@ -34,6 +34,8 @@ EmulsionDetPoint.cxx
 EmulsionDetContFact.cxx
 Scifi.cxx
 ScifiPoint.cxx
+H7_Scifi.cxx
+H7_ScifiPoint.cxx
 MuFilter.cxx
 MuFilterPoint.cxx
 MuFilterHit.cxx

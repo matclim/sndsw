@@ -20,6 +20,7 @@ MCTracksWithHitsOrEnergyCut = False # or of above, factor 2 file size increase c
 parser = ArgumentParser()
 group = parser.add_mutually_exclusive_group()
 
+parser.add_argument("--H7TargetThick",   dest="H7Targetthick",   help="Set thickness of the H7 setup target", required=False, default = 29.5, type = float)
 parser.add_argument("--H7",   dest="testbeamH7",   help="use geometry of new [denominated H7 for now] testbeam setup", required=False, default = 0, type = int)
 parser.add_argument("--H6",   dest="testbeamH6",   help="use geometry of H8/H6 testbeam setup", required=False, default = 0, type = int)
 parser.add_argument("--Genie",   dest="genie",   help="Genie for reading and processing neutrino interactions (1 standard, 2 FLUKA, 3 Pythia, 4 GENIE geometry driver)", required=False, default = 0, type = int)
@@ -74,6 +75,10 @@ if options.ntuple:         simEngine = "Ntuple"
 if options.muonback: simEngine = "MuonBack"
 if options.nuage:          simEngine = "Nuage"
 if options.mudis:          simEngine = "muonDIS"
+
+if options.testbeamH6 == True and options.testbeamH7 == True:
+  print("Cannot load two testbeam setups simultaneously, setting geometry to H7")
+  options.testbeamH6=False
 
 if options.inputFile:
   if options.inputFile == "none": options.inputFile = None
@@ -202,11 +207,12 @@ if simEngine=="Genie":
    tolerance_vtx_z = 1*u.m * 0.5/39
    # From first veto bar
    if(options.testbeamH7):
-     neutrino_vtx_start_z = snd_geo.MuFilter.Veto1Dy - snd_geo.H7_MuFilter.VetoBarZ/2. - tolerance_vtx_z
+     neutrino_vtx_start_z = snd_geo.H7_MuFilter.Veto1Dy - snd_geo.H7_MuFilter.VetoBarZ/2. - tolerance_vtx_z
+     neutrino_vtx_end_z = snd_geo.H7_Scifi.Ypos4 + snd_geo.H7_Scifi.zdim/2. + tolerance_vtx_z
    else:
      neutrino_vtx_start_z = snd_geo.MuFilter.Veto1Dy - snd_geo.MuFilter.VetoBarZ/2. - tolerance_vtx_z
-   # To last Scifi plane
-   neutrino_vtx_end_z = snd_geo.Scifi.Ypos4 + snd_geo.Scifi.zdim/2. + tolerance_vtx_z
+     # To last Scifi plane
+     neutrino_vtx_end_z = snd_geo.Scifi.Ypos4 + snd_geo.Scifi.zdim/2. + tolerance_vtx_z
 
    Geniegen.SetPositions(-480*u.m, neutrino_vtx_start_z, neutrino_vtx_end_z)
 
