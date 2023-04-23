@@ -62,7 +62,6 @@ fLength(-1.),
 fELoss(-1),
 fH7_MuFilterPointCollection(new TClonesArray("H7_MuFilterPoint"))
 {
-std::cout << "H7_MuFilter constructed" << std::endl;
 }
 
 H7_MuFilter::H7_MuFilter(const char* name, Bool_t Active,const char* Title)
@@ -76,7 +75,6 @@ fLength(-1.),
 fELoss(-1),
 fH7_MuFilterPointCollection(new TClonesArray("H7_MuFilterPoint"))
 {
-std::cout << "H7_MuFilter constructed" << std::endl;
 }
 
 H7_MuFilter::~H7_MuFilter()
@@ -115,7 +113,6 @@ Int_t H7_MuFilter::InitMedium(const char* name)
 
 void H7_MuFilter::ConstructGeometry()
 {
-	std::cout << "H7_MuFilter geometry constructing" << std::endl;
 	TGeoVolume *top=gGeoManager->FindVolumeFast("Detector");
 	if(!top)  LOG(ERROR) << "no Detector volume found " ;
 
@@ -305,6 +302,7 @@ void H7_MuFilter::ConstructGeometry()
 	Double_t fTargetScintillatorZ = conf_floats["H7_MuFilter/TScintZ"];
 
 	//H7 Segmented Target Thicknesses
+	Double_t fTargettotalThick = conf_floats["H7_MuFilter/H7_Tthick"]; 
 	Double_t fTargetThick1 = conf_floats["H7_MuFilter/H7_TT1"]; 
 	Double_t fTargetThick2 = conf_floats["H7_MuFilter/H7_TT2"];
 	Double_t fTargetThick3 = conf_floats["H7_MuFilter/H7_TT3"];
@@ -334,7 +332,7 @@ void H7_MuFilter::ConstructGeometry()
 	  if (edge_Iron[9][2] <0.1 && l==0) {
 //		TGeoVolume *volFeTarget[3] = {gGeoManager->MakeBox("volScintTarget0",Fe,80./2, 60./2, 16.77/2/2),
 //					      gGeoManager->MakeBox("volScintTarget1",Fe,80./2, 60./2, 16.77/2/2),
-//					      gGeoManager->MakeBox("volScintTarget2",Fe,80./2, 60./2, (29.5-16.77)/2)};
+//					      gGeoManager->MakeBox("volScintTarget2",Fe,80./2, 60./2, (fTargettotalThick-16.77)/2)};
 
 //Segmentation in 3
 /*		TGeoVolume *volFeTarget[3] = {gGeoManager->MakeBox("volScintTarget0",Fe,80./2, 60./2, fTargetThick1),
@@ -347,29 +345,29 @@ void H7_MuFilter::ConstructGeometry()
 	//	AddSensitiveVolume(volFeTarget[0]);
 	//	AddSensitiveVolume(volFeTarget[1]);
 	//	AddSensitiveVolume(volFeTarget[2]);
-		displacement = edge_Iron[l+1] - TVector3(80/2,-60/2,29.5/2+fFeBlockZ+3*fTargetScintillatorZ);
+		displacement = edge_Iron[l+1] - TVector3(80/2,-60/2,fTargettotalThick/2+fFeBlockZ+3*fTargetScintillatorZ);
 		volH7_MuFilter->AddNode(volFeTarget[0],1,
                                     new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
 		volH7_MuFilter->AddNode(volFeTarget[1],1,
-                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+29.5/3+2.5));
+                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+fTargettotalThick/3+2.5));
 		volH7_MuFilter->AddNode(volFeTarget[2],1,
-                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+2*(29.5/3+2.5)));
+                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+2*(fTargettotalThick/3+2.5)));
 	//}
 	  displacement = edge_H7_MuFilter[l+1]+LocBarUS + TVector3(-fUpstreamBarX/2, 0, 0);
 	  volH7_MuFilter->AddNode(volUpstreamDet,fNVetoPlanes+l,
                                     new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
 */
-		
-		TGeoVolume *volFeTarget[100];
+		int numberofslices=fTargettotalThick/0.1; //slices of 1mm each
+		TGeoVolume *volFeTarget[numberofslices];
 
-		displacement = edge_Iron[l+1] - TVector3(80/2,-60/2,29.5/2+fFeBlockZ+3*fTargetScintillatorZ);
-		for(int element=0;element<100;element++){
-			volFeTarget[element]=gGeoManager->MakeBox(Form("volScintTarget%d",element),Fe,80./2, 60./2,29.5/100/2),
+		displacement = edge_Iron[l+1] - TVector3(80/2,-60/2,fTargettotalThick/2+fFeBlockZ+3*fTargetScintillatorZ);
+		for(int element=0;element<numberofslices;element++){
+			volFeTarget[element]=gGeoManager->MakeBox(Form("volScintTarget%d",element),Fe,80./2, 60./2,fTargettotalThick/numberofslices/2),
 			volFeTarget[element]->SetLineColor(kGreen-4);
 			AddSensitiveVolume(volFeTarget[element]);
 			volH7_MuFilter->AddNode(volFeTarget[element],100+element,
-                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+element*(29.5/100/*+2.5*/)));
-		}
+                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+45-element*(fTargettotalThick/numberofslices)));
+			}
 		}
 	  displacement = edge_H7_MuFilter[l+1]+LocBarUS + TVector3(-fUpstreamBarX/2, 0, 0);
 	  volH7_MuFilter->AddNode(volUpstreamDet,fNVetoPlanes+l,

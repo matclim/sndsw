@@ -61,7 +61,7 @@ with ConfigRegistry.register_config("basic") as c:
         c.H7_Scifi.zdim = 3*u.cm 
         c.H7_Scifi.DZ = 1 * u.cm 
         c.H7_Scifi.nmats = 1
-        c.H7_Scifi.nscifi   = 3
+        c.H7_Scifi.nscifi   = 0
 
         #SiPM parameters
         c.H7_Scifi.channel_width     = 0.25 *u.mm
@@ -111,9 +111,14 @@ with ConfigRegistry.register_config("basic") as c:
         c.H7_Scifi.timeResol = 150.*u.picosecond
 
         # absolute edge point positions in survey coordinate system
-        c.H7_Scifi.Xpos0,c.H7_Scifi.Ypos0,c.H7_Scifi.Zpos0 = 4.34*u.cm, 298.94*u.cm, 15.22*u.cm
-        c.H7_Scifi.Xpos1,c.H7_Scifi.Ypos1,c.H7_Scifi.Zpos1 = 4.34*u.cm, 311.94*u.cm, 15.22*u.cm
-        c.H7_Scifi.Xpos2,c.H7_Scifi.Ypos2,c.H7_Scifi.Zpos2 = 4.34*u.cm, 324.94*u.cm, 15.22*u.cm
+        #c.H7_MuFilter.H7_BC_ScintX      = -33.08*u.cm
+        #c.H7_MuFilter.H7_BC_ScintY      = 29.15*u.cm
+#        c.H7_Scifi.Xpos0,c.H7_Scifi.Ypos0,c.H7_Scifi.Zpos0 = 4.34*u.cm, 298.94*u.cm, 15.22*u.cm
+#        c.H7_Scifi.Xpos1,c.H7_Scifi.Ypos1,c.H7_Scifi.Zpos1 = 4.34*u.cm, 311.94*u.cm, 15.22*u.cm
+#        c.H7_Scifi.Xpos2,c.H7_Scifi.Ypos2,c.H7_Scifi.Zpos2 = 4.34*u.cm, 324.94*u.cm, 15.22*u.cm
+        c.H7_Scifi.Xpos0,c.H7_Scifi.Ypos0,c.H7_Scifi.Zpos0 = -33.08*u.cm, 29.15*u.cm, 20*u.cm
+        c.H7_Scifi.Xpos1,c.H7_Scifi.Ypos1,c.H7_Scifi.Zpos1 = -33.08*u.cm, 29.15*u.cm, 25*u.cm
+        c.H7_Scifi.Xpos2,c.H7_Scifi.Ypos2,c.H7_Scifi.Zpos2 = -33.08*u.cm, 29.15*u.cm, 30*u.cm
 
 # H7_Scifi technical drawing, distance from first channel on vertical / horizontal plane to edge point  225,225,0, xy plane z perpendicularc.H7_Scifi.ydim
         c.H7_Scifi.EdgeAX, c.H7_Scifi.EdgeAY, c.H7_Scifi.EdgeAZ =  225*u.mm, 225*u.mm, 0*u.mm
@@ -234,15 +239,17 @@ with ConfigRegistry.register_config("basic") as c:
         c.H7_MuFilter.USBoxY1        = c.H7_MuFilter.DSHLocY - c.H7_MuFilter.DownstreamBarZ/2 - c.H7_MuFilter.SupportBoxD
         c.H7_MuFilter.USBoxY2        = c.H7_MuFilter.DSHLocY + c.H7_MuFilter.DownstreamBarZ/2 + c.H7_MuFilter.SupportBoxD
 
-	#Segmented Target thickness
-        c.H7_MuFilter.H7_TT1=29.5/3
-        c.H7_MuFilter.H7_TT2=29.5/3
-        c.H7_MuFilter.H7_TT3=29.5/3
+        c.H7_MuFilter.H7_Tthick=Tthick*u.cm
+        
+        #Slice thicknesses
+        c.H7_MuFilter.H7_TT1=c.H7_MuFilter.H7_Tthick/3
+        c.H7_MuFilter.H7_TT2=c.H7_MuFilter.H7_Tthick/3
+        c.H7_MuFilter.H7_TT3=c.H7_MuFilter.H7_Tthick/3
 
 	#Segmented Target SciFit thickness
-        c.H7_MuFilter.TScintX=0.1
-        c.H7_MuFilter.TScintY=0.1
-        c.H7_MuFilter.TScintZ=0.1
+        c.H7_MuFilter.TScintX=0
+        c.H7_MuFilter.TScintY=0
+        c.H7_MuFilter.TScintZ=0
 
 	#Beam counter Parameters
 
@@ -250,7 +257,10 @@ with ConfigRegistry.register_config("basic") as c:
         c.H7_MuFilter.H7_BC_Scint_thick = 5*u.mm
         c.H7_MuFilter.H7_BC_ScintX      = -33.08*u.cm
         c.H7_MuFilter.H7_BC_ScintY      = 29.15*u.cm
-        c.H7_MuFilter.H7_BC_ScintZ      = 45.705*u.cm
+        #for Tthick=29.5
+        #c.H7_MuFilter.H7_BC_ScintZ      = 45.705*u.cm
+        #c.H7_MuFilter.H7_BC_ScintZ      = 75.205-c.H7_MuFilter.H7_Tthick
+        c.H7_MuFilter.H7_BC_ScintZ      = 0 
 
        # VETO support box
         c.H7_MuFilter.SupportBoxVW = 4*u.mm
@@ -298,12 +308,12 @@ with ConfigRegistry.register_config("basic") as c:
         c.H7_MuFilter.Muon7Dz = 127.7*u.mm + 0.25*u.cm
         c.H7_MuFilter.Muon8Dz = 127.7*u.mm + 0.56*u.cm
 # from tk alignment
-        c.H7_Scifi.Zpos0+=  537.00  *u.um
-        c.H7_Scifi.Xpos0+=  -1177.09  *u.um
-        c.H7_Scifi.Zpos1+=  113.00  *u.um
-        c.H7_Scifi.Xpos1+=  -810.00  *u.um
-        c.H7_Scifi.Zpos2+=   22.00  *u.um
-        c.H7_Scifi.Xpos2+=  1602.8  *u.um
+        #c.H7_Scifi.Zpos0+=  20.00  *u.cm
+        #c.H7_Scifi.Xpos0+=  -1177.09  *u.um
+        #c.H7_Scifi.Zpos1+=  25.00  *u.cm
+        #c.H7_Scifi.Xpos1+=  -810.00  *u.um
+        #c.H7_Scifi.Zpos2+=   30.00  *u.cm
+        #c.H7_Scifi.Xpos2+=  1602.8  *u.um
         #c.H7_Scifi.Zpos3+=  162.62  *u.um
         #c.H7_Scifi.Xpos3+=  -322.53  *u.um
         #c.H7_Scifi.Zpos4+=  229.08  *u.um
@@ -319,3 +329,4 @@ with ConfigRegistry.register_config("basic") as c:
         c.H7_Scifi.LocM410,c.H7_Scifi.LocM411,c.H7_Scifi.LocM412=  -1.49*u.um,    24.0*u.um,      -22.52*u.um
         c.H7_Scifi.LocM500,c.H7_Scifi.LocM501,c.H7_Scifi.LocM502=  -0.08*u.um,   -46.78*u.um,      46.86*u.um
         c.H7_Scifi.LocM510,c.H7_Scifi.LocM511,c.H7_Scifi.LocM512=  -230.92*u.um, 292.28*u.um,   -61.36*u.um
+

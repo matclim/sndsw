@@ -20,7 +20,7 @@ MCTracksWithHitsOrEnergyCut = False # or of above, factor 2 file size increase c
 parser = ArgumentParser()
 group = parser.add_mutually_exclusive_group()
 
-parser.add_argument("--H7TargetThick",   dest="H7Targetthick",   help="Set thickness of the H7 setup target", required=False, default = 29.5, type = float)
+parser.add_argument("--H7TargetThick",   dest="H7TargetThick",   help="Set thickness of the H7 setup target", required=False, default = 29.5, type = float)
 parser.add_argument("--H7",   dest="testbeamH7",   help="use geometry of new [denominated H7 for now] testbeam setup", required=False, default = 0, type = int)
 parser.add_argument("--H6",   dest="testbeamH6",   help="use geometry of H8/H6 testbeam setup", required=False, default = 0, type = int)
 parser.add_argument("--Genie",   dest="genie",   help="Genie for reading and processing neutrino interactions (1 standard, 2 FLUKA, 3 Pythia, 4 GENIE geometry driver)", required=False, default = 0, type = int)
@@ -110,7 +110,7 @@ shipRoot_conf.configure(0)     # load basic libraries, prepare atexit for python
 
 if options.testbeamH6:  snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_H6geom_config.py")
 elif options.testbeamH7:
-  snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_H7geom_config.py")
+  snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_H7geom_config.py",Tthick=options.H7TargetThick)
 else:                         
   snd_geo = ConfigRegistry.loadpy("$SNDSW_ROOT/geometry/sndLHC_geom_config.py")
 
