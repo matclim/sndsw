@@ -366,7 +366,8 @@ void H7_MuFilter::ConstructGeometry()
 			volFeTarget[element]->SetLineColor(kGreen-4);
 			AddSensitiveVolume(volFeTarget[element]);
 			volH7_MuFilter->AddNode(volFeTarget[element],100+element,
-                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+45-element*(fTargettotalThick/numberofslices)));
+                                   new TGeoTranslation(displacement.X(),displacement.Y(),350-element*(fTargettotalThick/numberofslices)));
+//                                    new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()+45-element*(fTargettotalThick/numberofslices)));
 			}
 		}
 	  displacement = edge_H7_MuFilter[l+1]+LocBarUS + TVector3(-fUpstreamBarX/2, 0, 0);
