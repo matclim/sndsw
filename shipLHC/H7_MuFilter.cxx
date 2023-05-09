@@ -362,7 +362,7 @@ void H7_MuFilter::ConstructGeometry()
 
 		displacement = edge_Iron[l+1] - TVector3(80/2,-60/2,fTargettotalThick/2+fFeBlockZ+3*fTargetScintillatorZ);
 		for(int element=0;element<numberofslices;element++){
-			volFeTarget[element]=gGeoManager->MakeBox(Form("volScintTarget%d",element),Fe,80./2, 60./2,fTargettotalThick/numberofslices/2),
+			volFeTarget[element]=gGeoManager->MakeBox(Form("volScintTarget%d",element),Fe,30./2, 30./2,fTargettotalThick/numberofslices/2),
 			volFeTarget[element]->SetLineColor(kGreen-4);
 			AddSensitiveVolume(volFeTarget[element]);
 			volH7_MuFilter->AddNode(volFeTarget[element],100+element,
