@@ -301,6 +301,7 @@ void Scifi::ConstructGeometry()
 
   // for testbeam 2023
   // for now the distinct feature of the testbeam could be the 4 SciFi planes
+  std::map<int, TGeoVolume*> volAirCover;
   std::map<int, TGeoVolume*> volFeTarget;
   std::map<int, float> fFeTargetX;
   std::map<int, float> fFeTargetY;
@@ -350,11 +351,37 @@ void Scifi::ConstructGeometry()
     if (fNScifi==4 && istation < fNScifi-1) {
        volFeTarget[istation] = gGeoManager->MakeBox(TString("volFeTarget"+station),Fe,fFeTargetX[istation]/2., fFeTargetY[istation]/2., fFeTargetZ[istation]/2.);
        volFeTarget[istation]->SetLineColor(kGreen-4);
-       volTarget->AddNode(volFeTarget[istation],1,
+       AddSensitiveVolume(volFeTarget[istation]);
+       volTarget->AddNode(volFeTarget[istation],50+istation,
                                          new TGeoTranslation(DeltasV[istation][0] ,
                                                              DeltasH[istation][1] ,
                                                              DeltasH[istation][2] + totalThickness + fFeTargetZ[istation]/2.));
     }
+
+    volAirCover[0] = gGeoManager->MakeBox(TString("volAirCover_over"),air,fFeTargetX[0]/2., 1., (fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness);
+    volAirCover[0]->SetLineColor(kRed);
+    AddSensitiveVolume(volAirCover[0]);
+    volTarget->AddNode(volAirCover[0],20,new TGeoTranslation(DeltasV[0][0],DeltasH[0][1]+15.5,DeltasH[1][2]+totalThickness+(fFeTargetZ[0]+fFeTargetZ[3])/2));
+
+    volAirCover[1] = gGeoManager->MakeBox(TString("volAirCover_under"),air,fFeTargetX[0]/2., 1., (fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness);
+    volAirCover[1]->SetLineColor(kBlue);
+    volTarget->AddNode(volAirCover[1],21,new TGeoTranslation(DeltasV[0][0],DeltasH[0][1]-15.5,DeltasH[1][2]+totalThickness+(fFeTargetZ[0]+fFeTargetZ[3])/2));
+    AddSensitiveVolume(volAirCover[1]);
+
+    volAirCover[2] = gGeoManager->MakeBox(TString("volAirCover_left"),air,1., fFeTargetY[0]/2. ,(fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness);
+    volAirCover[2]->SetLineColor(kCyan);
+    volTarget->AddNode(volAirCover[2],22,new TGeoTranslation(DeltasV[0][0]-15.5,DeltasH[0][1],DeltasH[1][2]+(fFeTargetZ[0]+fFeTargetZ[3])/2));
+    AddSensitiveVolume(volAirCover[2]);
+
+    volAirCover[3] = gGeoManager->MakeBox(TString("volAirCover_right"),air,1., fFeTargetY[0]/2., (fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness);
+    volAirCover[3]->SetLineColor(kYellow+2);
+    AddSensitiveVolume(volAirCover[3]);
+    volTarget->AddNode(volAirCover[3],23,new TGeoTranslation(DeltasV[0][0]+15.5,DeltasH[0][1],DeltasH[1][2]+totalThickness+(fFeTargetZ[0]+fFeTargetZ[3])/2));
+
+    volAirCover[4] = gGeoManager->MakeBox(TString("volAirCover_right"),air,500, 500., 1);
+    volAirCover[4]->SetLineColor(kOrange);
+    AddSensitiveVolume(volAirCover[4]);
+    volTarget->AddNode(volAirCover[4],23,new TGeoTranslation(DeltasV[0][0],DeltasH[0][1],DeltasH[1][2]+totalThickness+(fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])+0.5));
 
     //Creating Scifi planes by appending fiber mats
     for (int imat = 0; imat < fNMats; imat++){
