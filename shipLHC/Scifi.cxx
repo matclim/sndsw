@@ -381,7 +381,7 @@ void Scifi::ConstructGeometry()
     volAirCover[4] = gGeoManager->MakeBox(TString("volAirCover_right"),air,500, 500., 1);
     volAirCover[4]->SetLineColor(kOrange);
     AddSensitiveVolume(volAirCover[4]);
-    volTarget->AddNode(volAirCover[4],23,new TGeoTranslation(DeltasV[0][0],DeltasH[0][1],DeltasH[1][2]+totalThickness+(fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])+0.5));
+    volTarget->AddNode(volAirCover[4],24,new TGeoTranslation(DeltasV[0][0],DeltasH[0][1],DeltasH[3][2] + totalThickness + fFeTargetZ[3]/2.+0.5));
 
     //Creating Scifi planes by appending fiber mats
     for (int imat = 0; imat < fNMats; imat++){
