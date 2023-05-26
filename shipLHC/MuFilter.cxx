@@ -301,7 +301,7 @@ void MuFilter::ConstructGeometry()
 	
 
 	//Air Cover Definition
-    	TGeoVolume *volAirCover5 = gGeoManager->MakeBox(TString("volAirCover_US"),air,500, 500, 1);
+    	TGeoVolume *volAirCover5 = gGeoManager->MakeBox(TString("volAirCover_US"),air,500, 500, 1./2.);
     	AddSensitiveVolume(volAirCover5);
     	volAirCover5->SetLineColor(kOrange);
 

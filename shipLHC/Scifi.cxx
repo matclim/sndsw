@@ -372,14 +372,12 @@ void Scifi::ConstructGeometry()
   }
     Int_t AirCover_ID_list[5] = {100,101,102,103,104};
 
-    std::cout << "INITIALIZED AIR 0 " << std::endl;
-    std::cout << fFeTargetX[0]/2.<< " " << 1./2<< " " << (fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness << std::endl;
-    volAirCover0 = gGeoManager->MakeBox(TString("volAirCover_over"),air,fFeTargetX[0]/2., 1., (fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness);
+    volAirCover0 = gGeoManager->MakeBox(TString("volAirCover_over"),air,fFeTargetX[0]/2., 1./2, (fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness);
     volAirCover0->SetLineColor(kRed);
     AddSensitiveVolume(volAirCover0);
     volTarget->AddNode(volAirCover0,AirCover_ID_list[0],new TGeoTranslation(DeltasV[0][0],DeltasH[0][1]+15.5+0.5,DeltasH[1][2]+totalThickness+(fFeTargetZ[0]+fFeTargetZ[3])/2));
 
-    volAirCover1 = gGeoManager->MakeBox(TString("volAirCover_under"),air,fFeTargetX[0]/2., 1., (fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness);
+    volAirCover1 = gGeoManager->MakeBox(TString("volAirCover_under"),air,fFeTargetX[0]/2., 1./2, (fFeTargetZ[0]+fFeTargetZ[1]+fFeTargetZ[2]+fFeTargetZ[3])/2.+totalThickness);
     volAirCover1->SetLineColor(kBlue);
     AddSensitiveVolume(volAirCover1);
     volTarget->AddNode(volAirCover1,AirCover_ID_list[1],new TGeoTranslation(DeltasV[0][0],DeltasH[0][1]-15.5-0.5,DeltasH[1][2]+totalThickness+(fFeTargetZ[0]+fFeTargetZ[3])/2));
@@ -397,7 +395,7 @@ void Scifi::ConstructGeometry()
     volAirCover4 = gGeoManager->MakeBox(TString("volAirCover_forward"),air,500, 500., 1./2.);
     volAirCover4->SetLineColor(kOrange+2);
     AddSensitiveVolume(volAirCover4);
-    volTarget->AddNode(volAirCover4,AirCover_ID_list[4],new TGeoTranslation(DeltasV[0][0],DeltasH[0][1],DeltasH[3][2] + totalThickness + fFeTargetZ[3]/2.+ 1.5));
+    volTarget->AddNode(volAirCover4,AirCover_ID_list[4],new TGeoTranslation(DeltasV[0][0],DeltasH[0][1],DeltasH[3][2] + totalThickness + fFeTargetZ[3]/2.+ 0.5));
 
 
 }
