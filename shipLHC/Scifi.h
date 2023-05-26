@@ -121,7 +121,7 @@ private:
     std::map<TString,TString> conf_strings;
     SNDLHCEventHeader *eventHeader;
 protected:
-    
+    Bool_t IsAir=0; 
     Int_t InitMedium(const char* name);
     
 };

@@ -128,6 +128,8 @@ void MuFilter::ConstructGeometry()
 	TGeoMedium *Scint =gGeoManager->GetMedium("polyvinyltoluene");
 	InitMedium("Concrete");
 	TGeoMedium *concrete = gGeoManager->GetMedium("Concrete");
+	InitMedium("air");
+	TGeoMedium *air = gGeoManager->GetMedium("air");
 
 	Float_t nSiPMs[3];             //  number of SiPMs per side
 	Float_t nSides[3];             //  number of sides readout
@@ -296,6 +298,15 @@ void MuFilter::ConstructGeometry()
 	TGeoVolume *volMuUpstreamBar = gGeoManager->MakeBox("volMuUpstreamBar",Scint,fUpstreamBarX/2, fUpstreamBarY/2, fUpstreamBarZ/2);
 	volMuUpstreamBar->SetLineColor(kBlue+2);
 	AddSensitiveVolume(volMuUpstreamBar);
+	
+
+	//Air Cover Definition
+    	TGeoVolume *volAirCover5 = gGeoManager->MakeBox(TString("volAirCover_US"),air,500, 500, 1);
+    	AddSensitiveVolume(volAirCover5);
+    	volAirCover5->SetLineColor(kOrange);
+
+	Double_t airX,airY;
+
 	for(Int_t l=0; l<fNUpstreamPlanes; l++)
 	{
 	  string name = "volMuUpstreamDet_"+std::to_string(l);
@@ -304,6 +315,8 @@ void MuFilter::ConstructGeometry()
 	  displacement = edge_Iron[l+1] - TVector3(fFeBlockX/2,-fFeBlockY/2,-fFeBlockZ/2);
 	  volMuFilter->AddNode(volFeBlock,l,
                                     new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
+	  airX=displacement.X();
+	  airY=displacement.Y();
 // place for H8 mockup target 20cm in front of US1
 	  if (edge_Iron[9][2] <0.1 && l==0) {
 		TGeoVolume *volFeTarget = gGeoManager->MakeBox("volFeTarget",Fe,80./2, 60./2, 29.5/2);
@@ -315,6 +328,7 @@ void MuFilter::ConstructGeometry()
 	  displacement = edge_MuFilter[l+1]+LocBarUS + TVector3(-fUpstreamBarX/2, 0, 0);
 	  volMuFilter->AddNode(volUpstreamDet,fNVetoPlanes+l,
                                     new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
+    	  volMuFilter->AddNode(volAirCover5,105+l,new TGeoTranslation(airX,airY,displacement.Z()-0.5));
 
 	 //  USBox1 = bottom front left
 	  displacement = edge_MuFilter[l+1] +USBox1 + TVector3(-USBoxDim.X()/2,USBoxDim.Y()/2,USBoxDim.Z()/2);
@@ -381,6 +395,7 @@ void MuFilter::ConstructGeometry()
 	
 	volMuFilter->AddNode(volDownstreamDet,l+fNUpstreamPlanes+fNVetoPlanes,
 				new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
+    	volMuFilter->AddNode(volAirCover5,110,new TGeoTranslation(airX,airY,displacement.Z()));
 
 	//adding bars within each detector box
 	if (l!=n_planes) {

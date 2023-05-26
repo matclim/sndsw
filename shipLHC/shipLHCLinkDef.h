@@ -11,6 +11,8 @@
 #pragma link C++ class EmulsionDetContFact+;
 #pragma link C++ class Scifi+;
 #pragma link C++ class ScifiPoint+;
+#pragma link C++ class AirCover+;
+#pragma link C++ class AirCoverPoint+;
 #pragma link C++ class MuFilter+;
 #pragma link C++ class MuFilterPoint+;
 #pragma link C++ class MuFilterHit+;
