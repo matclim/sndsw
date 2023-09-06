@@ -228,7 +228,7 @@ void MuFilter::ConstructGeometry()
 
 	//*****************************************UPSTREAM SECTION*********************************//
 
-		//Definition of the box containing Fe Blocks + Timing Detector planes 
+	//Definition of the box containing Fe Blocks + Timing Detector planes 
 	TGeoVolumeAssembly *volMuFilter = new TGeoVolumeAssembly("volMuFilter");
 	
 	//Iron blocks volume definition
