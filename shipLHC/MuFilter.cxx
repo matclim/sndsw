@@ -300,10 +300,6 @@ void MuFilter::ConstructGeometry()
 	AddSensitiveVolume(volMuUpstreamBar);
 	
 
-	//Air Cover Definition
-    	TGeoVolume *volAirCover5 = gGeoManager->MakeBox(TString("volAirCover_US"),air,500, 500, 1./2.);
-    	AddSensitiveVolume(volAirCover5);
-    	volAirCover5->SetLineColor(kOrange);
 
 	Double_t airX,airY;
 
@@ -328,7 +324,6 @@ void MuFilter::ConstructGeometry()
 	  displacement = edge_MuFilter[l+1]+LocBarUS + TVector3(-fUpstreamBarX/2, 0, 0);
 	  volMuFilter->AddNode(volUpstreamDet,fNVetoPlanes+l,
                                     new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
-    	  volMuFilter->AddNode(volAirCover5,105+l,new TGeoTranslation(airX,airY,displacement.Z()-0.5));
 
 	 //  USBox1 = bottom front left
 	  displacement = edge_MuFilter[l+1] +USBox1 + TVector3(-USBoxDim.X()/2,USBoxDim.Y()/2,USBoxDim.Z()/2);
@@ -395,7 +390,6 @@ void MuFilter::ConstructGeometry()
 	
 	volMuFilter->AddNode(volDownstreamDet,l+fNUpstreamPlanes+fNVetoPlanes,
 				new TGeoTranslation(displacement.X(),displacement.Y(),displacement.Z()));
-    	volMuFilter->AddNode(volAirCover5,110,new TGeoTranslation(airX,airY,displacement.Z()));
 
 	//adding bars within each detector box
 	if (l!=n_planes) {

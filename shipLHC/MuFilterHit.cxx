@@ -98,15 +98,17 @@ MuFilterHit::MuFilterHit(Int_t detID, std::vector<MuFilterPoint*> V)
      } 
      // shortSiPM = {3,6,11,14,19,22,27,30,35,38,43,46,51,54,59,62,67,70,75,78};
      for (unsigned int j=0; j<nSiPMs; ++j){
-        if (j==3 or j==6){
+        if (j==2 or j==5){
            signals[j] = signalRight/float(nSiPMs) * siPMcalibrationS;   // most simplest model, divide signal individually. Small SiPMS special
            times[j] = gRandom->Gaus(earliestToAL, timeResol);
         }else{
-           signals[j] = signalRight/float(nSiPMs) * siPMcalibration;   // most simplest model, divide signal individually. 
+		if(signalRight/float(nSiPMs) * siPMcalibration < 150) signals[j] = signalRight/float(nSiPMs) * siPMcalibration;   // most simplest model, divide signal individually. 
+		else signals[j] = 300-gRandom->Landau(150,5);  //Saturation of large SiPMs: simplistic model, just smear around 150 which is observed to be the max in data
            times[j] = gRandom->Gaus(earliestToAL, timeResol);
         }
         if (nSides>1){ 
-            signals[j+nSiPMs] = signalLeft/float(nSiPMs) * siPMcalibration;   // most simplest model, divide signal individually.
+            if(signalLeft/float(nSiPMs) * siPMcalibration < 150) signals[j+nSiPMs] = signalLeft/float(nSiPMs) * siPMcalibration;   // most simplest model, divide signal individually.
+	    else signals[j+nSiPMs] = 300-gRandom->Landau(150,5); //Saturation of large SiPMs: simplistic model, just smear around 150 which is observed to be the max in data
             times[j+nSiPMs] = gRandom->Gaus(earliestToAR, timeResol);
         }
      }
