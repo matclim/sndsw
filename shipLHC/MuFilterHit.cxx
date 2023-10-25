@@ -35,6 +35,16 @@ MuFilterHit::MuFilterHit(Int_t detID,Int_t nP,Int_t nS)
    }
 }
 
+//void  MuFilterHit::Compute_Bar_assymetry(double y_interaction_Left, double y_interaction_Right,Float_t *relative_fractions){
+//
+//	//Spherical wave (simplified) contribution
+//	Spher_factor = 1;
+//	//Absorption length	
+////	Absorb_factor=(TMath::Power(1/TMath::E(),y/Scintillator_Atten_Length);
+//	Absorb_factor= 1;
+//	relative_fractions[0] = 2*(1-y_interaction_left/80)*Spher_factor*Absorb_factor
+//	relative_fractions[1] = 2*(1-y_interaction_right/80)*Spher_factor*Absorb_factor
+//}
 
 // -----   constructor from MuFilterPoint   ------------------------------------------
 MuFilterHit::MuFilterHit(Int_t detID, std::vector<MuFilterPoint*> V)
@@ -76,6 +86,7 @@ MuFilterHit::MuFilterHit(Int_t detID, std::vector<MuFilterPoint*> V)
      Float_t signalRight = 0;
      Float_t earliestToAL = 1E20;
      Float_t earliestToAR = 1E20;
+     Float_t Relative_signal[2];
      for(auto p = std::begin(V); p!= std::end(V); ++p) {
 
         Double_t signal = (*p)->GetEnergyLoss();
@@ -86,7 +97,8 @@ MuFilterHit::MuFilterHit(Int_t detID, std::vector<MuFilterPoint*> V)
         MuFilterDet->GetPosition(fDetectorID,vLeft, vRight);
         Double_t distance_Left    =  (vLeft-impact).Mag();
         Double_t distance_Right =  (vRight-impact).Mag();
-        signalLeft+=signal*TMath::Exp(-distance_Left/attLength);
+        
+	signalLeft+=signal*TMath::Exp(-distance_Left/attLength);
         signalRight+=signal*TMath::Exp(-distance_Right/attLength);
 
       // for the timing, find earliest particle and smear with time resolution
@@ -95,20 +107,29 @@ MuFilterHit::MuFilterHit(Int_t detID, std::vector<MuFilterPoint*> V)
         Double_t t_Right = ptime + distance_Right/propspeed;
         if ( t_Left <earliestToAL){earliestToAL = t_Left ;}
         if ( t_Right <earliestToAR){earliestToAR = t_Right ;}
-     } 
+     }
      // shortSiPM = {3,6,11,14,19,22,27,30,35,38,43,46,51,54,59,62,67,70,75,78};
      for (unsigned int j=0; j<nSiPMs; ++j){
         if (j==2 or j==5){
            signals[j] = signalRight/float(nSiPMs) * siPMcalibrationS;   // most simplest model, divide signal individually. Small SiPMS special
+	 //  if(signals[j]<5) signals[j] = signals[j]+gRandom->Landau(0,1.5);
            times[j] = gRandom->Gaus(earliestToAL, timeResol);
         }else{
+		if(signalRight<digi_threshold) signals[j] = -999; //threshold above which the signal is observed in the SiPMs, TOFPET thresholds need to be implemented as well
 		if(signalRight/float(nSiPMs) * siPMcalibration < 150) signals[j] = signalRight/float(nSiPMs) * siPMcalibration;   // most simplest model, divide signal individually. 
-		else signals[j] = 300-gRandom->Landau(150,5);  //Saturation of large SiPMs: simplistic model, just smear around 150 which is observed to be the max in data
+		else signals[j] = 300-gRandom->Landau(150,3);  //Saturation of large SiPMs: simplistic model, just smear around 150 which is observed to be the max in data
+		
            times[j] = gRandom->Gaus(earliestToAL, timeResol);
         }
-        if (nSides>1){ 
+        if (nSides>1){
+	if (j==2 or j==5){
+	   signals[j+nSiPMs] = signalRight/float(nSiPMs) * siPMcalibrationS;   // most simplest model, divide signal individually. Small SiPMS special
+	   //if(signals[j+nSiPMs]<5) signals[j+nSiPMs] = signals[j+nSiPMs]+gRandom->Landau(0,1.5);
+	   times[j+nSiPMs] = gRandom->Gaus(earliestToAL, timeResol);
+	}
+	    if(signalLeft<digi_threshold) signals[j+nSiPMs] = -999; 
             if(signalLeft/float(nSiPMs) * siPMcalibration < 150) signals[j+nSiPMs] = signalLeft/float(nSiPMs) * siPMcalibration;   // most simplest model, divide signal individually.
-	    else signals[j+nSiPMs] = 300-gRandom->Landau(150,5); //Saturation of large SiPMs: simplistic model, just smear around 150 which is observed to be the max in data
+	    else signals[j+nSiPMs] = 300-gRandom->Landau(150,3); //Saturation of large SiPMs: simplistic model, just smear around 150 which is observed to be the max in data
             times[j+nSiPMs] = gRandom->Gaus(earliestToAR, timeResol);
         }
      }

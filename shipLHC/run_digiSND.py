@@ -63,8 +63,9 @@ mufiDet.SetConfPar("MuFilter/DsAttenuationLength",350 * u.cm)		#  values between
 mufiDet.SetConfPar("MuFilter/DsTAttenuationLength",700 * u.cm)		# top readout with mirror on bottom
 mufiDet.SetConfPar("MuFilter/VandUpAttenuationLength",999 * u.cm)	# no significante attenuation observed for H6 testbeam
 mufiDet.SetConfPar("MuFilter/DsSiPMcalibrationS",25.*1000.)			# in MC: 1.65 keV are about 41.2 qdc
-mufiDet.SetConfPar("MuFilter/VandUpSiPMcalibration",25.*1000.);
-mufiDet.SetConfPar("MuFilter/VandUpSiPMcalibrationS",25.*1000.);
+#Changed
+mufiDet.SetConfPar("MuFilter/VandUpSiPMcalibration",7.*1000.);
+mufiDet.SetConfPar("MuFilter/VandUpSiPMcalibrationS",1.*1000.);
 mufiDet.SetConfPar("MuFilter/VandUpPropSpeed",12.5*u.cm/u.nanosecond);
 mufiDet.SetConfPar("MuFilter/DsPropSpeed",14.3*u.cm/u.nanosecond);
 scifiDet.SetConfPar("Scifi/nphe_min",3.5)   # threshold

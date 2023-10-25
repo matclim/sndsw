@@ -279,8 +279,8 @@ with ConfigRegistry.register_config("basic") as c:
         c.MuFilter.DsAttenuationLength   =  350 * u.cm                #  values between 300 cm and 400cm observed for H6 testbeam
         c.MuFilter.DsTAttenuationLength =  700 * u.cm                # top readout with mirror on bottom
         c.MuFilter.VandUpAttenuationLength = 999 * u.cm        # no significante attenuation observed for H6 testbeam
-        c.MuFilter.VandUpSiPMcalibrationL    = 25.*1000.       # 1.65 MeV = 41 qcd 
-        c.MuFilter.VandUpSiPMcalibrationS    = 25.*1000.
+        c.MuFilter.VandUpSiPMcalibrationL    = 20.*1000.       # 1.65 MeV = 41 qcd 
+        c.MuFilter.VandUpSiPMcalibrationS    = 20.*1000.
         c.MuFilter.DsSiPMcalibration             = 25.*1000.
         c.MuFilter.timeResol = 150.*u.picosecond
         c.MuFilter.VandUpPropSpeed    = 12.5*u.cm/u.nanosecond
@@ -357,8 +357,8 @@ with ConfigRegistry.register_config("basic") as c:
            #c.Scifi.LfirstChannelHX,c.Scifi.LfirstChannelHY,c.Scifi.LfirstChannelHZ = -195.0*u.mm, 195.178*u.mm,  6.25*u.mm  # sipm on the right side direction away from IP1
 
            # add 3 variable size iron blocks
-           c.Scifi.FeTargetX1, c.Scifi.FeTargetY1, c.Scifi.FeTargetZ1  = 30.*u.cm, 0.*u.cm, 30.*u.cm
-           c.Scifi.FeTargetX2, c.Scifi.FeTargetY2, c.Scifi.FeTargetZ2  = 30.*u.cm, 0.*u.cm, 30.*u.cm
+           c.Scifi.FeTargetX1, c.Scifi.FeTargetY1, c.Scifi.FeTargetZ1  = 30.*u.cm, 10.*u.cm, 30.*u.cm
+           c.Scifi.FeTargetX2, c.Scifi.FeTargetY2, c.Scifi.FeTargetZ2  = 30.*u.cm, 10.*u.cm, 30.*u.cm
            c.Scifi.FeTargetX3, c.Scifi.FeTargetY3, c.Scifi.FeTargetZ3  = 30.*u.cm, 10.*u.cm, 30.*u.cm
 
 # absolute edge point positions in survey coordinate system (survey is 'by eye' for now)

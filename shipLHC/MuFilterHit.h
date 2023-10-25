@@ -47,9 +47,9 @@ class MuFilterHit : public SndlhcHit
 
     Float_t flag;   ///< flag
     Float_t fMasked[16];  /// masked signal
-
+    Float_t Scintillator_Atten_Length = 3.5; //meters
     ClassDef(MuFilterHit,5);
-    
+    Float_t digi_threshold = 800;    
 
 };
 
